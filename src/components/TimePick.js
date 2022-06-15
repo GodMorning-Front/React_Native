@@ -1,42 +1,54 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import React, { useState, useEffect } from 'react'
+import { View, Text, Button, StyleSheet } from 'react-native'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
-const TimePick = ({ item, passingtime }) => {
-  const [selectedDate, setSelectedDate] = useState();
-  const [datePickerVisible, setDatePickerVisible] = useState(false);
-
+const TimePick = ({ item, text, id, setHoursRange, hoursRange }) => {
+  const [selectedDate, setSelectedDate] = useState()
+  const [datePickerVisible, setDatePickerVisible] = useState(false)
+  console.log('Time Pick hour', item)
   const handleConfirm = (hour) => {
-    setSelectedDate(hour);
-    hideDatePicker();
-  };
+    setSelectedDate(hour)
+    hideDatePicker()
+    const today = hour.toLocaleTimeString('en-US', {
+      timeStyle: 'short',
+    })
+    const currentTime = Object.assign({}, hoursRange)
+    currentTime[id]['text'] = today
+    console.log(currentTime)
+    //currentTime[item.id]['text'] = today
+    setHoursRange(currentTime)
+  }
 
   //새로시작
   const showDatePicker = () => {
-    setDatePickerVisible(true);
-  };
+    setDatePickerVisible(true)
+  }
 
   const hideDatePicker = () => {
-    setDatePickerVisible(false);
-  };
+    setDatePickerVisible(false)
+  }
 
   function printHour() {
     //object->string
     //object
     //console.log(selectedDate)
-    const today = selectedDate.toLocaleTimeString("en-US", {
-      timeStyle: "short",
-    });
-    //
-    // passingtime(item, today)
-    return `${today}`;
+    const today = selectedDate.toLocaleTimeString('en-US', {
+      timeStyle: 'short',
+    })
+
+    // console.log(hoursRange[item.id]['text'])
+
+    return `${today}`
   }
 
   return (
-    <View>
-      <Text style={styles.title} onPress={showDatePicker}>
-        {selectedDate ? printHour() : item.text}
-        {item.id == 1 ? <Text> ~ </Text> : null}
+    <View style={styles.container}>
+      <Text
+        style={{ fontSize: 20, color: 'white', fontWeight: '300' }}
+        onPress={showDatePicker}
+      >
+        {selectedDate ? printHour() : text}
+        {id == 1 ? <Text> ~ </Text> : null}
       </Text>
 
       <DateTimePickerModal
@@ -48,16 +60,11 @@ const TimePick = ({ item, passingtime }) => {
         onCancel={hideDatePicker}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 25,
-    color: "white",
-    fontWeight: "300",
-    fontFamily: "NanumSquareRoundB",
-  },
-});
+  container: {},
+})
 
-export default TimePick;
+export default TimePick
