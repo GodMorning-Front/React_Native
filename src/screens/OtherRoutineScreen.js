@@ -47,8 +47,8 @@ function OtherRoutineScreen() {
   };
 
   const [hoursRange, setHoursRange] = useState({
-    1: { id: "1", text: todos[TodoId].timezone1 },
-    2: { id: "2", text: todos[TodoId].timezone2 },
+    1: { id: "1", text: todos[TodoId].startTime },
+    2: { id: "2", text: todos[TodoId].endTime },
   });
 
   const goBack = () => {
@@ -93,9 +93,11 @@ function OtherRoutineScreen() {
           <View
             style={{ flexDirection: "row", justifyContent: "space-evenly" }}
           >
-            {Object.values(hoursRange).map((item) => (
-              <TimePick key={item.id} item={item} />
-            ))}
+              <Text style={{fontSize:20,color:'white'}}>{hoursRange[1]['text']}</Text>
+              <Text style={{fontSize:20,color:'white'}}> ~ </Text>
+              <Text style={{fontSize:20,color:'white'}}>{hoursRange[2]['text']}</Text>
+            
+           
           </View>
           <TouchableOpacity onPress={letHeart}>
             {hearted ? (

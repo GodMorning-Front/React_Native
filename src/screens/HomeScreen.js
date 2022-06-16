@@ -31,15 +31,15 @@ function HomeScreen() {
   const [times, setTimes] = useState(timeTable);
 
   const [timeTodos, setTimeTodos] = useState(
-    todos.filter((routine) => routine.timezone1.charAt(0) == timeId)
+    todos.filter((routine) => routine.startTime.charAt(0) == timeId)
   );
 
   useEffect(() => {
     setTimeTodos(
       todos.filter(
         (routine) =>
-          routine.timezone1.charAt(0) == timeId ||
-          routine.timezone1.substring(0, 2) == timeId
+          routine.startTime.charAt(0) == timeId ||
+          routine.startTime.substring(0, 2) == timeId
       )
     );
     console.log(timeTodos);

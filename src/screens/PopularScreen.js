@@ -22,8 +22,8 @@ function PopularScreen() {
           {todos
             .filter(
               (routine, index) =>
-                (routine.timezone1.charAt(0) == 6 ||
-                  routine.timezone1.substring(0, 2) == 6) &&
+                (routine.startTime.charAt(0) == 6 ||
+                  routine.endTime.substring(0, 2) == 6) &&
                 index % 2 == 0
             )
             .map((routine) => (
@@ -34,8 +34,8 @@ function PopularScreen() {
           {todos
             .filter(
               (routine, index) =>
-                (routine.timezone1.charAt(0) == 6 ||
-                  routine.timezone1.substring(0, 2) == 6) &&
+                (routine.startTime.charAt(0) == 6 ||
+                  routine.endTime.substring(0, 2) == 6) &&
                 index % 2 == 1
             )
             .map((routine) => (
