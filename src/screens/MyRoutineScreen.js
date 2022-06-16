@@ -30,6 +30,7 @@ import TimePick from '../components/TimePick'
 import * as Font from 'expo-font'
 import AppLoading from 'expo-app-loading'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios';
 
 const STORAGE_KEY = '@toDos'
 const MyRoutineScreen = () => {
@@ -90,16 +91,16 @@ const MyRoutineScreen = () => {
     const currentTasks = Object.assign({}, tasks)
     delete currentTasks[id]
     setTasks(currentTasks)
-    console.log('tasks', tasks)
+    //console.log('tasks', tasks)
     if (
       typeof todos[today] != 'undefined' &&
       Object.keys(todos[today]['todo_list']).length != 0
     ) {
       const currentTodos = Object.assign({}, todos)
-      console.log('delete todos ', currentTodos[today]['todo_list'][id])
+      //console.log('delete todos ', currentTodos[today]['todo_list'][id])
       delete currentTodos[today]['todo_list'][id]
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(currentTodos))
-      console.log('todos', todos[today]['todo_list'])
+     // console.log('todos', todos[today]['todo_list'])
     }
   }
 
@@ -124,18 +125,13 @@ const MyRoutineScreen = () => {
   }
   const [change, setChange] = useState(true)
   const _toggleTask = async (id) => {
-    {
-      /*const currentTasks = Object.assign({}, tasks)
-    currentTasks[id]['completed'] = !currentTasks[id]['completed']
-    setTasks(currentTasks)
-  */
-    }
+    
     if (
       typeof todos[today] != 'undefined' &&
       typeof todos[today]['todo_list'][id] !== 'undefined'
     ) {
       const currentTodos = Object.assign({}, todos)
-      console.log('여기까진 옴 ')
+      //console.log('여기까진 옴 ')
       currentTodos[today]['todo_list'][id]['completed'] = !currentTodos[today][
         'todo_list'
       ][id]['completed']
@@ -173,7 +169,7 @@ const MyRoutineScreen = () => {
       // && todos[today]['title'].length != 0
     ) {
       setTitle(todos[today]['title'])
-      console.log(todos[today]['title'].length)
+     // console.log(todos[today]['title'].length)
       //todo load
       loadToDos()
     } else {
@@ -203,8 +199,48 @@ const MyRoutineScreen = () => {
   }
 
   const onPost = () => {
+    var step=0
+    //todo 개수 구하기 
+    const todocount= Object.values(todos[today]['todo_list']).length
     Alert.alert('post')
+
+    //text만 꺼내기 
+    var Posttodo = []
+    for (step ; step<todocount;step++){
+      Posttodo.push({'content':Object.values(todos[today]['todo_list'])[step]['text']})
+    }
+
+    const postType= {"id":1,
+      "title":"gahee",
+      "create_date":"20220616",
+      "startTime":"9",
+      "endTime":"11",
+      "todo_list":[
+      {
+      "content":"post"
+      }
+      ]}
+   const newPost= Object.assign({},todos[today])
+  
+   newPost['todo_list'] = Posttodo
+   newPost['id']=1
+ console.log(todos[today]["title"])
+ 
+ // console.log(newPost['id'])
+/*
+axios({
+  method:"POST",
+  url: 'http://3.38.14.254/routine/create',
+  data:newPost
+}).then((res)=>{
+  console.log(res);
+}).catch(error=>{
+  console.log(error);
+  throw new Error(error);
+});
+*/
   }
+
 
   {
     /*날짜 변환 */
@@ -240,12 +276,14 @@ const MyRoutineScreen = () => {
       const addTodos = Object.assign({}, todos[today]['todo_list'], addTasks)
       const newTodos = todos
       newTodos[today]['todo_list'] = addTodos
+      //20220616여기고침
+      newTodos[today]['title']=title
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newTodos))
     } else {
       const newToDos = Object.assign({}, todos, saveTodoObject)
       setTodos(newToDos)
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newToDos))
-      console.log('안에서 맨처음 암것도 없을때 저장 ', newToDos)
+     // console.log('안에서 맨처음 암것도 없을때 저장 ', newToDos)
     }
     setTasks({})
 
