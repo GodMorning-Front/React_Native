@@ -30,6 +30,7 @@ import TimePick from '../components/TimePick'
 import * as Font from 'expo-font'
 import AppLoading from 'expo-app-loading'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+
 const STORAGE_KEY = '@toDos'
 const MyRoutineScreen = () => {
   const [newTask, setNewTask] = useState('')
@@ -84,7 +85,7 @@ const MyRoutineScreen = () => {
     2: { id: '2', text: 'End' },
   })
 
-  // AsyncStorage.clear()
+   //AsyncStorage.clear()
   const _deleteTask = async (id) => {
     const currentTasks = Object.assign({}, tasks)
     delete currentTasks[id]
