@@ -12,22 +12,32 @@ const RoutineButton = ({ routine }) => {
   const Todo_list = routine.Todo_list;
 
   const toSeconds = (time) => {
+
     const parts = time.split(":");
-    return parts[0] * 3600 + parts[1] * 60;
+    console.log(typeof (parseInt(parts[0])*3600))
+  
+    return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60;
   };
 
   const calculate = () => {
-    const difference = Math.abs(toSeconds(Timezone2) - toSeconds(Timezone1));
+
+  
+    const difference = Math.abs(toSeconds(routine.startTime) - toSeconds(routine.endTime));
     const h = Math.floor(difference / 3600);
     const m = Math.floor((difference % 3600) / 60);
+   
     if (h > 0) {
       if (m == 0) {
+        
         return `${h}시간`;
       }
+     
       return `${h}시간 \n ${m}분`;
     } else {
+  
       return `${m}분`;
     }
+  
   };
 
   const id = routine.id;

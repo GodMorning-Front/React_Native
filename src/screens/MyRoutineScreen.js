@@ -227,7 +227,7 @@ const MyRoutineScreen = () => {
  console.log(todos[today]["title"])
  
  // console.log(newPost['id'])
-/*
+
 axios({
   method:"POST",
   url: 'http://3.38.14.254/routine/create',
@@ -238,7 +238,7 @@ axios({
   console.log(error);
   throw new Error(error);
 });
-*/
+
   }
 
 

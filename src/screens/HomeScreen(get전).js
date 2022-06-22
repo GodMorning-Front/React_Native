@@ -14,47 +14,8 @@ import axios from 'axios';
 
 function HomeScreen() {
   const navigation = useNavigation();
-  const [fettodo,setFetchTodo] = useState(null);
+
   const [timeId, setTimeId] = useState(4);
-
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    const fetching = async () => {
-      try {
-        // 요청이 시작 할 때에는 error 와 users 를 초기화하고
-        setError(null)
-        setFetchTodo(null)
-        // loading 상태를 true 로 바꿉니다.
-        setLoading(true)
-        const response = await axios.get(
-          'http://3.38.14.254/newRoutine/list',
-        )
-        setFetchTodo(response.data)// 데이터는 response.data 안에 들어있습니다.
-       //console.log(response.data)
-      } catch (e) {
-        setError(e)
-      }
-      setLoading(false)
-    }
-    fetching()
-  }, [])
-
-  useEffect(() => {  
-    fettodo !==null ? (
-      console.log(timeId),
-    setTimeTodos(
-      fettodo.filter(
-        (routine) =>
-          routine.startTime.charAt(0) == timeId ||
-          routine.startTime.substring(0, 2) == timeId
-      )
-    )
-    ):console.log('아직')
-  }, [timeId]);
-
- 
 
   const timeTable = [
     { id: 4, title: "4시", isSelect: true },
@@ -71,11 +32,22 @@ function HomeScreen() {
   const [times, setTimes] = useState(timeTable);
 
 
-  const [timeTodos, setTimeTodos] = useState(null);
+  const [timeTodos, setTimeTodos] = useState(
+    todos.filter((routine) => routine.startTime.charAt(0) == timeId)
+  );
 
+  useEffect(() => {
+    setTimeTodos(
+      todos.filter(
+        (routine) =>
+          routine.startTime.charAt(0) == timeId ||
+          routine.startTime.substring(0, 2) == timeId
+      )
+    );
+    console.log(timeTodos);
+  }, [times]);
 
   const ontimePress = (index) => {
-   
     setTimeId(index);
 
     const newTable = times.map((time) => {
@@ -125,18 +97,11 @@ function HomeScreen() {
       />
       <View style={styles.r_container}>
         <ScrollView contentContainerStyle={styles.routine}>
-        {fettodo !==null && timeTodos !==null ? (
-          <>
           <View style={styles.column1}>
             {timeTodos
               .filter((routine, index) => index % 2 == 0)
               .map((routine) => (
-                <>
                 <RoutineButton routine={routine} key={routine.id} />
-                <Text>{routine.startTime}</Text>
-                <Text> - </Text>
-                <Text>{routine.endTime}</Text>
-                </>
               ))}
           </View>
           <View style={styles.column2}>
@@ -145,11 +110,7 @@ function HomeScreen() {
               .map((routine) => (
                 <RoutineButton routine={routine} key={routine.id} />
               ))}
-              </View>
-             </> 
-        ) :
-        <Text>로딩중</Text>
-              }
+          </View>
         </ScrollView>
       </View>
     </View>
