@@ -132,7 +132,7 @@ function HomeScreen() {
               .filter((routine, index) => index % 2 == 0)
               .map((routine) => (
                 <>
-                <RoutineButton routine={routine} key={routine.id} />
+                <RoutineButton routine={routine} key={routine.post_no} />
                 <Text>{routine.startTime}</Text>
                 <Text> - </Text>
                 <Text>{routine.endTime}</Text>
@@ -143,7 +143,7 @@ function HomeScreen() {
             {timeTodos
               .filter((routine, index) => index % 2 == 1)
               .map((routine) => (
-                <RoutineButton routine={routine} key={routine.id} />
+                <RoutineButton routine={routine} key={routine.post_no}/>
               ))}
               </View>
              </> 

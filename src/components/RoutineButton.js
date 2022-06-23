@@ -14,7 +14,7 @@ const RoutineButton = ({ routine }) => {
   const toSeconds = (time) => {
 
     const parts = time.split(":");
-    console.log(typeof (parseInt(parts[0])*3600))
+   
   
     return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60;
   };
@@ -25,7 +25,12 @@ const RoutineButton = ({ routine }) => {
     const difference = Math.abs(toSeconds(routine.startTime) - toSeconds(routine.endTime));
     const h = Math.floor(difference / 3600);
     const m = Math.floor((difference % 3600) / 60);
-   
+    
+    if (isNaN(h) || isNaN(m))
+    {
+      return `${routine.startTime}시 시작`
+    }
+
     if (h > 0) {
       if (m == 0) {
         

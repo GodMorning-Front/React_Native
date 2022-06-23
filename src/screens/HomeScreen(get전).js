@@ -36,7 +36,7 @@ function HomeScreen() {
     todos.filter((routine) => routine.startTime.charAt(0) == timeId)
   );
 
-  useEffect(() => {
+  useEffect(() => {  
     setTimeTodos(
       todos.filter(
         (routine) =>
