@@ -43,7 +43,7 @@ function HomeScreen() {
 
   useEffect(() => {  
     fettodo !==null ? (
-      console.log(timeId),
+    //  console.log(timeId),
     setTimeTodos(
       fettodo.filter(
         (routine) =>

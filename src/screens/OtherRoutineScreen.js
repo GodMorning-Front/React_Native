@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,16 +13,46 @@ import TimePick from "../components/TimePick";
 import todos from "../../assets/data/todos";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
-
+import axios from 'axios';
 function OtherRoutineScreen() {
+  const [fettodo,setFetchTodo] = useState(null);
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+ 
+    
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  useEffect(() => {
+
+
+    const fetching = async () => {
+      try { 
+        // 요청이 시작 할 때에는 error 와 users 를 초기화하고
+        setError(null)
+        setFetchTodo(null)
+        // loading 상태를 true 로 바꿉니다.
+        setLoading(true)
+        const response = await axios.get(
+          `http://3.38.14.254/newRoutine/list/${route.params?.post_no}`,
+        )
+        setFetchTodo(response.data)// 데이터는 response.data 안에 들어있습니다
+      } catch (e) {
+        setError(e)
+      }
+      setLoading(false)
+    }
+    fetching()
+  
+     
+  }, [])
+
+console.log(fettodo)
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
 
-  const navigation = useNavigation();
-  const route = useRoute();
-  const TodoId = route.params?.id;
-
-  const Todo_list = todos[TodoId].todo_list;
 
   const [heartCount, addHeart] = useState(0);
   const [scrapCount, addScrap] = useState(0);
@@ -46,10 +76,10 @@ function OtherRoutineScreen() {
     }
   };
 
-  const [hoursRange, setHoursRange] = useState({
-    1: { id: "1", text: todos[TodoId].startTime },
-    2: { id: "2", text: todos[TodoId].endTime },
-  });
+ // const [hoursRange, setHoursRange] = useState({
+  //  1: { id: "1", text: todos[TodoId].startTime },
+  //  2: { id: "2", text: todos[TodoId].endTime },
+ // });
 
   const goBack = () => {
     navigation.goBack();
@@ -70,9 +100,11 @@ function OtherRoutineScreen() {
         alignItems: "center",
       }}
     >
+        {fettodo !==null ? 
+        (<>
       <View style={styles.topbar}>
         <FontAwesome onPress={() => goBack()} name="angle-left" size={40} />
-        <Text style={styles.title}>{todos[TodoId].title}</Text>
+        <Text style={styles.title}>{fettodo['title']}</Text>
 
         <TouchableOpacity onPress={letScrap}>
           {scraped ? (
@@ -93,9 +125,9 @@ function OtherRoutineScreen() {
           <View
             style={{ flexDirection: "row", justifyContent: "space-evenly" }}
           >
-              <Text style={{fontSize:20,color:'white'}}>{hoursRange[1]['text']}</Text>
+              <Text style={{fontSize:20,color:'white'}}>{fettodo['startTime']}</Text>
               <Text style={{fontSize:20,color:'white'}}> ~ </Text>
-              <Text style={{fontSize:20,color:'white'}}>{hoursRange[2]['text']}</Text>
+              <Text style={{fontSize:20,color:'white'}}>{fettodo['endTime']}</Text>
             
            
           </View>
@@ -110,12 +142,19 @@ function OtherRoutineScreen() {
       </View>
 
       <ScrollView>
-        {Object.values(Todo_list).map((id, index) => (
+        {Object.values(fettodo['todo_list']).map((id, index) => (
           <View style={styles.todocontainer} key={index}>
             <Text style={styles.content}>{id.content}</Text>
           </View>
+          
         ))}
-      </ScrollView>
+        </ScrollView>
+        </>
+        ) :
+        (
+          <Text>로딩중</Text>
+        )
+}
     </LinearGradient>
   );
   {

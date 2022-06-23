@@ -45,10 +45,11 @@ const RoutineButton = ({ routine }) => {
   
   };
 
-  const id = routine.id;
+  const post_no = routine.post_no;
 
   const goTodoPage = () => {
-    navigation.navigate("Others", { id });
+  //  console.log(id)
+    navigation.navigate("Others", { post_no });
   };
 
   return (
