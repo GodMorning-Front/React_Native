@@ -7,9 +7,7 @@ const RoutineButton = ({ routine }) => {
   //한사람의 todos 전체받기
   const navigation = useNavigation();
   const Title = routine.title;
-  const Timezone1 = routine.startTime;
-  const Timezone2 = routine.endTime;
-  const Todo_list = routine.Todo_list;
+
 
   const toSeconds = (time) => {
 
@@ -20,8 +18,6 @@ const RoutineButton = ({ routine }) => {
   };
 
   const calculate = () => {
-
-  
     const difference = Math.abs(toSeconds(routine.startTime) - toSeconds(routine.endTime));
     const h = Math.floor(difference / 3600);
     const m = Math.floor((difference % 3600) / 60);

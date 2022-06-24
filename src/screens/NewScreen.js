@@ -1,17 +1,23 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import todos from "../../assets/data/todos";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,useIsFocused } from "@react-navigation/native";
 import RoutineButton from "../components/RoutineButton";
 import axios from 'axios';
+
+
+
+  
 
 const NewScreen = () => {
   const navigation = useNavigation();
   const [fettodo,setFetchTodo] = useState(null);
+  
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-
+  const [flag, setFlag] = useState(flag)
+  const isFocused = useIsFocused();
   useEffect(() => {
     const fetching = async () => {
       try {
@@ -24,16 +30,17 @@ const NewScreen = () => {
           'http://3.38.14.254/newRoutine/list',
         )
         setFetchTodo(response.data)// 데이터는 response.data 안에 들어있습니다.
-       console.log(response.data)
+        
       } catch (e) {
         setError(e)
       }
       setLoading(false)
+      setFlag(!flag)
     }
     fetching()
-  }, [])
+  }, [isFocused])
 
-  //console.log(fettodo)
+  
 
   return (
     <View style={styles.container}>

@@ -2,11 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   Text,
+  Button,
   View,
   ScrollView,
   Dimensions,
   TouchableOpacity,
   useWindowDimensions,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import TimePick from "../components/TimePick";
@@ -20,7 +22,23 @@ function OtherRoutineScreen() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
- 
+
+
+  const onDelete = () =>{
+    Alert.alert("삭제됨")
+    axios.delete(`http://3.38.14.254/routine/delete?post_no=${route.params?.post_no}`)
+    .then(function (response) {
+    // handle success
+    console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+  }
     
   const navigation = useNavigation();
   const route = useRoute();
@@ -45,11 +63,9 @@ function OtherRoutineScreen() {
       setLoading(false)
     }
     fetching()
-  
-     
   }, [])
 
-console.log(fettodo)
+  console.log(route.params?.post_no)
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
 
@@ -76,10 +92,6 @@ console.log(fettodo)
     }
   };
 
- // const [hoursRange, setHoursRange] = useState({
-  //  1: { id: "1", text: todos[TodoId].startTime },
-  //  2: { id: "2", text: todos[TodoId].endTime },
- // });
 
   const goBack = () => {
     navigation.goBack();
@@ -119,6 +131,7 @@ console.log(fettodo)
         <View style={{ flexDirection: "row" }}>
           <FontAwesome name="user" size={30} />
           <Text style={styles.user}>게시자</Text>
+          <Button onPress={onDelete} style = {{width:30,height:15}} title = " 삭제 "></Button>
         </View>
 
         <View style={styles.timePick}>
@@ -157,17 +170,7 @@ console.log(fettodo)
 }
     </LinearGradient>
   );
-  {
-    /*데이터 받아오는거
-     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-     {Todo_list.map((id) => (
-        <Text style={{ fontSize: 30 }}>{id['content']}</Text>
-      ))}
-      <Text>Details Screen</Text>
-    </View>
-  
-  */
-  }
+
 }
 const styles = StyleSheet.create({
   todo: {

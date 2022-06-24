@@ -23,7 +23,7 @@ function PopularScreen() {
             .filter(
               (routine, index) =>
                 (routine.startTime.charAt(0) == 6 ||
-                  routine.endTime.substring(0, 2) == 6) &&
+                  routine.startTime.substring(0, 2) == 6) &&
                 index % 2 == 0
             )
             .map((routine) => (
@@ -35,7 +35,7 @@ function PopularScreen() {
             .filter(
               (routine, index) =>
                 (routine.startTime.charAt(0) == 6 ||
-                  routine.endTime.substring(0, 2) == 6) &&
+                  routine.startTime.substring(0, 2) == 6) &&
                 index % 2 == 1
             )
             .map((routine) => (

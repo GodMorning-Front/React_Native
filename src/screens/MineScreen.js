@@ -10,7 +10,7 @@ const MineScreen = () => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View style={styles.container}>
-        <Text style={styles.title}>나의 루틴들</Text>
+        <Text style={styles.title}>내가 Post한 게시글</Text>
         <ScrollView contentContainerStyle={styles.routine}>
           <View style={styles.column1}>
             {todos.map((routine) => (
