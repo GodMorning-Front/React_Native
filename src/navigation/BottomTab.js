@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import MyRoutineScreen from "../screens/MyRoutineScreen";
@@ -10,7 +9,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import MineScreen from "../screens/MineScreen";
 import HomeTabNav from "./HomeTab";
 import OtherRoutineScreen from "../screens/OtherRoutineScreen";
-//////////MyPage
+import MineRoutineScreen from "../screens/MineRoutineScreen";
+import {useIsFocused } from "@react-navigation/native";
+import React, { useState, useEffect, useCallback } from "react";
 const MyPageStack = createNativeStackNavigator();
 
 const MyPageStackNav = () => {
@@ -19,6 +20,7 @@ const MyPageStackNav = () => {
       <MyPageStack.Screen name="MyPage" component={MyPageScreen} />
       <MyPageStack.Screen name="Scrap" component={ScrapScreen} />
       <MyPageStack.Screen name="Mine" component={MineScreen} />
+      <MyPageStack.Screen name="Mines" component={MineRoutineScreen} />
     </MyPageStack.Navigator>
   );
 };
@@ -27,8 +29,19 @@ const MyPageStackNav = () => {
 const MyHomeStack = createNativeStackNavigator();
 
 const MyHomeStackNav = () => {
+
   return (
-    <MyHomeStack.Navigator>
+    <MyHomeStack.Navigator
+    screenOptions={{
+      //tabBarActiveTintColor: "white",
+      tabBarIndicatorStyle: {
+        backgroundColor: "white",
+      },
+      tabBarStyle: { 
+      backgroundColor:'white'},
+      
+    }}
+    >
       <MyHomeStack.Screen
         name="HomeTab"
         component={HomeTabNav}
@@ -58,6 +71,7 @@ const MyHomeStackNav = () => {
 const BottomTab = createBottomTabNavigator();
 
 const BottomTabNav = () => {
+
   return (
     <BottomTab.Navigator
       screenOptions={{
@@ -65,7 +79,9 @@ const BottomTabNav = () => {
         headerShown: false,
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "rgb(178, 171, 171)",
-      }}
+      }
+    }
+  
     >
       <BottomTab.Screen
         name="Home"

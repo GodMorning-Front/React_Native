@@ -16,12 +16,14 @@ const MyPageScreen = ({ navigation }) => {
 
   return (
     <View
-      style={{ flex: 1, paddingTop: inset.top, paddingBottom: inset.bottom }}
+      style={{ flex: 1, paddingTop: inset.top, paddingBottom: inset.bottom ,backgroundColor:'white'}}
     >
+      <View style={{justifyContent:'center',alignItems:'center'}}>
       <Image
         style={styles.logo}
         source={require("../../assets/images/logo.png")}
       />
+      </View>
       <View style={styles.first}>
         <Text style={styles.title}>마이페이지</Text>
       </View>
@@ -59,8 +61,7 @@ const MyPageScreen = ({ navigation }) => {
         }}
       />
 
-      {/*<Text style={{ fontSize: 20, left: 30, top: 20 }}>기타</Text>*/}
-
+  
       <Text
         style={{
           fontSize: 20,
@@ -92,8 +93,7 @@ const styles = StyleSheet.create({
   logo: {
     position: "absolute",
     //width: 280,
-    height: 290,
-    left: 60,
+  //  height: 290,
     top: 270,
     opacity: 0.5,
   },

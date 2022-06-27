@@ -12,6 +12,7 @@ import { useNavigation,useIsFocused } from "@react-navigation/native";
 import RoutineButton from "../components/RoutineButton";
 import closestIndexTo from "date-fns/fp/closestIndexTo/index";
 import axios from 'axios';
+import Spinner from "../../assets/spinner.gif";
 
 function HomeScreen() {
   const navigation = useNavigation();
@@ -134,7 +135,7 @@ function HomeScreen() {
    
         <Text style={{fontWeight:'550',fontSize:15}}>{wisesaying[getRandomIndex(wisesaying.length)]}</Text>
         </View>
-   
+  
 
       <View style={styles.r_container}>
       
@@ -159,7 +160,13 @@ function HomeScreen() {
               </View>
              </> 
         ) :
-        <Text>로딩중</Text>
+        <View
+        style={{
+          top: 200,
+        }}
+      >
+        <Image source={Spinner} style={{ width: 100, height: 100 }} />
+      </View>
               }
         </ScrollView>
       </View>

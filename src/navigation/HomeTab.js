@@ -4,10 +4,11 @@ import HomeScreen from "../screens/HomeScreen";
 import PopularScreen from "../screens/PopularScreen";
 import NewScreen from "../screens/NewScreen";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
+import {useIsFocused } from "@react-navigation/native";
 const HomeTab = createMaterialTopTabNavigator();
-
+ 
 const HomeTabNav = () => {
+
   return (
     <HomeTab.Navigator
       screenOptions={{
@@ -15,12 +16,13 @@ const HomeTabNav = () => {
         tabBarIndicatorStyle: {
           backgroundColor: "white",
         },
+        //tabBarStyle: { paddingBottom: 40,},
         tabBarItemStyle: { width: 100, height: 60 },
         swipeEnabled: false,
       }}
     >
       <HomeTab.Screen
-        name="Home"
+        name="Home" 
         component={HomeScreen}
         options={{
           title: ({ focused }) => (

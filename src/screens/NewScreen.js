@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { Image,StyleSheet, Text, View, ScrollView } from "react-native";
 import todos from "../../assets/data/todos";
 import { useNavigation,useIsFocused } from "@react-navigation/native";
 import RoutineButton from "../components/RoutineButton";
 import axios from 'axios';
-
-
+import Spinner from "../../assets/spinner.gif";
 
   
 
 const NewScreen = () => {
   const navigation = useNavigation();
   const [fettodo,setFetchTodo] = useState(null);
-  
+  const wisesaying = ['게으르지 않음은 영원한 삶의 집이요, 게으름의 죽음은 집이다','명언2','명언3','명언4','명언5']
+
+  const getRandomIndex= function(length){
+    return parseInt(Math.random()*length)
+  }
+
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -44,6 +48,14 @@ const NewScreen = () => {
 
   return (
     <View style={styles.container}>
+               <View  style={{justifyContent:'center',alignItems:'center',marginTop:20,marginBottom:20,}}>
+      <Image
+        source={require("../../assets/images/wisesaying.png")}
+      style={{position:'absolute',width:'95%'}}
+      />
+ 
+        <Text style={{fontWeight:'550',fontSize:15}}>{wisesaying[getRandomIndex(wisesaying.length)]}</Text>
+        </View>
     { fettodo !== null ? 
     (  
       <ScrollView contentContainerStyle={styles.routine}>
@@ -68,8 +80,13 @@ const NewScreen = () => {
    
     )
      : 
-     <Text> 로딩중</Text>
-  
+     <View
+     style={{
+       top: 200,
+     }}
+   >
+     <Image source={Spinner} style={{ width: 100, height: 100 }} />
+   </View>
   
   }
    </View>

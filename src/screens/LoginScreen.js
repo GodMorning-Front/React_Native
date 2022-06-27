@@ -5,8 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const LoginScreen = ({ navigation }) => {
   const inset = useSafeAreaInsets();
-  //console.log(inset);
-  //useEffect(() => {}, []);
+
 
   const login = () => {
     navigation.navigate("BottomTab");

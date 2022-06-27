@@ -173,6 +173,7 @@ function OtherRoutineScreen() {
 
 }
 const styles = StyleSheet.create({
+
   todo: {
     justifyContent: "center",
     alignItems: "center",
